@@ -3,10 +3,12 @@ FastAPI dependency injection helpers.
 """
 from typing import Annotated, Any
 
-from fastapi import Depends, HTTPException, status
+from fastapi import Depends, Header, HTTPException, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
-from app.core.security import decode_access_token
+from app.core import errors
+from app.core.errors import SnapReportError
+from app.core.security import decode_access_token, hash_api_key
 from app.db.database import get_database
 from app.services.auth_service import get_developer_by_id
 
@@ -44,3 +46,42 @@ async def get_current_developer(
 
 
 CurrentDeveloper = Annotated[dict[str, Any], Depends(get_current_developer)]
+
+
+async def get_project_from_api_key(
+    x_snapreport_api_key: Annotated[str | None, Header()] = None,
+) -> dict[str, Any]:
+    """
+    Authenticate an SDK request using the `X-SnapReport-Api-Key` header.
+    Hashes the incoming key and looks up the matching active project.
+    """
+    if not x_snapreport_api_key:
+        raise SnapReportError(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            error=errors.MISSING_API_KEY,
+            message="API key is missing.",
+        )
+
+    db = get_database()
+    project = await db["projects"].find_one(
+        {"api_key_hash": hash_api_key(x_snapreport_api_key)}
+    )
+
+    if project is None:
+        raise SnapReportError(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            error=errors.INVALID_API_KEY,
+            message="API key is invalid.",
+        )
+
+    if not project.get("is_active", True):
+        raise SnapReportError(
+            status_code=status.HTTP_403_FORBIDDEN,
+            error=errors.PROJECT_DISABLED,
+            message="This project is disabled.",
+        )
+
+    return project
+
+
+CurrentProject = Annotated[dict[str, Any], Depends(get_project_from_api_key)]

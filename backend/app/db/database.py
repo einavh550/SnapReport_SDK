@@ -30,6 +30,12 @@ async def create_indexes() -> None:
         await db["developer_accounts"].create_index("email", unique=True)
         await db["projects"].create_index("developer_id")
         await db["projects"].create_index("api_key_hash")
+        await db["report_tickets"].create_index("project_id")
+        await db["report_tickets"].create_index("developer_id")
+        await db["report_tickets"].create_index("status")
+        await db["report_tickets"].create_index("timestamp")
+        await db["report_tickets"].create_index("device_metadata.android_version")
+        await db["report_tickets"].create_index("app_metadata.app_version_name")
         logger.info("Database indexes ensured.")
     except Exception as exc:
         logger.warning("Could not create indexes (is MongoDB running?): %s", exc)
