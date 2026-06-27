@@ -1,0 +1,70 @@
+# ==========================================
+# Operating System Files
+# ==========================================
+.DS_Store
+Thumbs.db
+
+# ==========================================
+# IDEs & Editors (Cursor, VS Code, Android Studio)
+# ==========================================
+.idea/
+.vscode/
+*.swp
+*.swo
+*.iml
+
+# ==========================================
+# MILESTONES 1 & 2: Backend (Python / FastAPI)
+# ==========================================
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environments
+venv/
+env/
+.venv/
+
+# Environment variables & Secrets
+.env
+.env.*
+
+# Local Database
+*.sqlite3
+*.db
+
+# ==========================================
+# MILESTONE 3: Portal (Node.js / React)
+# ==========================================
+# Dependency directories
+node_modules/
+
+# Build output
+build/
+dist/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ==========================================
+# MILESTONES 4 & 5: Android SDK & Demo (Gradle)
+# ==========================================
+# Gradle cache & generated files
+.gradle/
+build/
+*/build/
+
+# Local configuration (Contains sensitive SDK paths)
+local.properties
+
+# C/C++ compilation (if used later)
+.externalNativeBuild/
+.cxx/
+
+# Compiled APKs and Bundles (Do not push heavy binaries to Git)
+*.apk
+*.aab
+*.ap_
