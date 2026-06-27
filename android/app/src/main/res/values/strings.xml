@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SnapReport Demo</string>
+    <string name="app_title">🐛 SnapReport Demo</string>
+    <string name="app_subtitle">Fill in a description and tap the button to submit a bug report to your SnapReport backend.</string>
+    <string name="hint_description">What went wrong? (optional)</string>
+    <string name="btn_report">Report a Bug</string>
+    <string name="footer_text">SnapReport SDK — M4 Integration Demo</string>
+</resources>
+
