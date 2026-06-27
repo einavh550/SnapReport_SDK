@@ -34,6 +34,10 @@ env/
 *.sqlite3
 *.db
 
+# Runtime-uploaded screenshots (keep the folder, ignore its contents)
+backend/app/storage/screenshots/*
+!backend/app/storage/screenshots/.gitkeep
+
 # ==========================================
 # MILESTONE 3: Portal (Node.js / React)
 # ==========================================
@@ -68,3 +72,4 @@ local.properties
 *.apk
 *.aab
 *.ap_
+
